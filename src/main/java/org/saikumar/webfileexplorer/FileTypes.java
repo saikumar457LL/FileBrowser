@@ -10,5 +10,7 @@ public enum FileTypes {
     part,deb,exe,
     xlsx,xls,csv,
     xz,tgz,AppImage,
-    conf
+    conf,webm,mov,
+    gif,bmp,webp,
+    log,md
 }

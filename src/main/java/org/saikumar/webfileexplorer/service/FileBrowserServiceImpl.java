@@ -2,6 +2,7 @@ package org.saikumar.webfileexplorer.service;
 
 import jakarta.annotation.PostConstruct;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.saikumar.webfileexplorer.FileTypes;
 import org.saikumar.webfileexplorer.model.FileInformation;
 import org.springframework.core.io.InputStreamResource;
@@ -21,6 +22,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 
+@Slf4j
 @Service
 public class FileBrowserServiceImpl implements FileBrowseService {
 
@@ -185,6 +187,13 @@ public class FileBrowserServiceImpl implements FileBrowseService {
             case "tgz" -> FileTypes.tgz;
             case "appimage" -> FileTypes.AppImage;
             case "conf" -> FileTypes.conf;
+            case "mov" -> FileTypes.mov;
+            case "gif" -> FileTypes.gif;
+            case "bmp" -> FileTypes.bmp;
+            case "webm" -> FileTypes.webm;
+            case "webp" -> FileTypes.webp;
+            case "log" -> FileTypes.log;
+            case  "md" -> FileTypes.md;
             case "" -> FileTypes.unknown;
             default -> FileTypes.unknown;
         };
