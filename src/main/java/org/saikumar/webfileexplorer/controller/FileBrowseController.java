@@ -53,23 +53,6 @@ public class FileBrowseController {
                 });
     }
 
-    @GetMapping(value = "/stream", produces = "video/mp4")
-    public Mono<ResponseEntity<InputStreamResource>> streamVideo(@RequestParam String path) throws IOException {
-        return fileBrowseService.downloadFile(path)
-                .map(stream -> {
-
-                    File file = new File(path);
-                    long size = file.length();
-
-                    return ResponseEntity.ok()
-                            .header(HttpHeaders.CONTENT_TYPE, "video/mp4")
-                            .header("Accept-Ranges", "bytes")
-                            .contentLength(size)
-                            .body(stream);
-                });
-    }
-
-
 
     @GetMapping("/drives")
     public Flux<FileInformation> listDrives() {
