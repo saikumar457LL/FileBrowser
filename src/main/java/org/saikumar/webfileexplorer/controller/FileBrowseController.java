@@ -53,7 +53,7 @@ public class FileBrowseController {
             }
 
             try {
-                // Detect MIME type — fallback to binary
+                // Detect MIME type
                 String mime = Files.probeContentType(file.toPath());
                 if (mime == null) mime = "application/octet-stream";
 
@@ -74,6 +74,7 @@ public class FileBrowseController {
         });
     }
 
+
     @GetMapping("/stream")
     public Mono<ResponseEntity<InputStreamResource>> streamVideo(
             @RequestParam String path,
@@ -90,16 +91,16 @@ public class FileBrowseController {
             long start = 0;
             long end = fileLength - 1;
 
-            // Detect MIME Type
+            // Detect MIME
             String mime;
             try {
-                mime = Files.probeContentType(Paths.get(path));
+                mime = Files.probeContentType(file.toPath());
                 if (mime == null) mime = "application/octet-stream";
             } catch (IOException e) {
                 mime = "application/octet-stream";
             }
 
-            // Handle Range Request (video streaming needs this)
+            // Support Range Requests
             if (rangeHeader != null && rangeHeader.startsWith("bytes=")) {
                 try {
                     String[] parts = rangeHeader.replace("bytes=", "").split("-");
@@ -107,9 +108,7 @@ public class FileBrowseController {
                     if (parts.length > 1 && !parts[1].isEmpty()) {
                         end = Long.parseLong(parts[1]);
                     }
-                } catch (Exception e) {
-                    start = 0;
-                }
+                } catch (Exception ignored) {}
             }
 
             if (end >= fileLength) end = fileLength - 1;
@@ -125,7 +124,7 @@ public class FileBrowseController {
 
                 return ResponseEntity
                         .status(rangeHeader == null ? 200 : 206)
-                        .header("Content-Type", mime)
+                        .header(HttpHeaders.CONTENT_TYPE, mime)
                         .header("Accept-Ranges", "bytes")
                         .header("Content-Range", "bytes " + start + "-" + end + "/" + fileLength)
                         .contentLength(contentLength)
@@ -136,6 +135,7 @@ public class FileBrowseController {
             }
         });
     }
+
 
 
     @GetMapping("/drives")
