@@ -194,6 +194,7 @@ public class FileBrowserServiceImpl implements FileBrowseService {
             case "webp" -> FileTypes.webp;
             case "log" -> FileTypes.log;
             case  "md" -> FileTypes.md;
+            case "mpeg" -> FileTypes.mpeg;
             case "" -> FileTypes.unknown;
             default -> FileTypes.unknown;
         };

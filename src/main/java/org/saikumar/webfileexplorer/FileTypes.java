@@ -12,5 +12,5 @@ public enum FileTypes {
     xz,tgz,AppImage,
     conf,webm,mov,
     gif,bmp,webp,
-    log,md
+    log,md,mpeg
 }
